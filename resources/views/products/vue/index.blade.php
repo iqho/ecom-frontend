@@ -56,14 +56,13 @@
 
     p {
         text-align: center;
-        color: #505050;
+        color: #b2bec3;
         padding: 5px;
         margin: 0px;
-        font-size: 15px;
     }
 
     h6 {
-        font-size: 16px;
+        font-size: 26px;
         text-align: center;
         color: #222f3e;
         margin: 0;
@@ -115,11 +114,9 @@
         background-color: #3b3e6e;
         border-bottom-left-radius: 10px;
     }
-
     .buy-1:hover {
         background-color: #470058;
     }
-
     .buy-2:hover {
         background-color: #583500;
     }
@@ -138,37 +135,51 @@
 </style>
 @endpush
 @section('content')
-
-<div class="gallery">
-    @foreach ($products as $product)
-    <div class="content">
-        <div class="border border-secondary">
-            <a href="{{ route('products.details', $product['id']) }}">
-                @if ($product['image'])
-                <img src="{{ config('app.backend_url') }}/product-images/{{ $product['image'] }}" class="card-img-top"
-                    alt="...">
-                @else
+<div id="app">
+    <div class="gallery">
+        <div class="content" v-for="(value, key) in products" :key="key">
+            <div v-if="value.image !== null ">
+                <img :src="'http://127.0.0.1:8000/product-images/'+value.image" class="card-img-top" alt="...">
+            </div>
+            <div v-else>
                 <img src="https://www.freeiconspng.com/uploads/no-image-icon-11.PNG" class="card-img-top" alt="...">
-                @endif
-            </a>
+            </div>
+            <h5 class="mt-1 mb-0">@{{ value.name }}</h5>
+            <p>@{{ value.description }}</p>
+            <h6>$100.00</h6>
+            <ul>
+                <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                <li><i class="fa fa-star" aria-hidden="true"></i></li>
+            </ul>
+            <button class="buy-2 col-6">Add to Cart</button><button class="buy-1 col-6">Add to Wishlist</button>
         </div>
-        <h5 class="mt-1 mb-0"><a href="{{ route('products.details', $product['id']) }}">{{ $product['name'] }}</a></h5>
-        <p class="d-inline-block text-truncate" style="max-width: 250px;">{{ $product['description'] }}</p>
-        <h6>
-            @foreach ($product['product_prices'] as $price)
-            {{ $price['price_type']['name'] }} : <strong class="text-danger">৳{{ $price['amount'] }}</strong><br>
-            @endforeach
-        </h6>
-        <ul>
-            <li><i class="fa fa-star" aria-hidden="true"></i></li>
-            <li><i class="fa fa-star" aria-hidden="true"></i></li>
-            <li><i class="fa fa-star" aria-hidden="true"></i></li>
-            <li><i class="fa fa-star" aria-hidden="true"></i></li>
-            <li><i class="fa fa-star" aria-hidden="true"></i></li>
-        </ul>
-        <button class="buy-2 col-6">Add to Cart</button><button class="buy-1 col-6">Add to Wishlist</button>
     </div>
-    @endforeach
 </div>
-
 @endsection
+
+@push('scripts')
+<script>
+    const {
+            createApp
+        } = Vue
+
+        createApp({
+            data() {
+                return {
+                    message: 'Hello Vue!',
+                    products: null,
+                }
+            },
+            created: function() {
+                axios
+                    .get("http://127.0.0.1:8000/api/api-products")
+                    .then(res => {
+                        this.products = res.data.product;
+                    })
+            }
+        }).mount('#app')
+</script>
+@endpush

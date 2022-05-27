@@ -1,50 +1,313 @@
-body.offcanvas-active{
-	overflow:hidden;
-}
+:root{
+    --orange:#ffa500;
+  }
 
-.offcanvas-header{ display:none; }
+  .btn22{
+    display: inline-block;
+    margin-top: 1rem;
+    background:var(--orange);
+    color:#fff;
+    padding:.8rem 3rem;
+    border:.2rem solid var(--orange);
+    cursor: pointer;
+    font-size: 1.7rem;
+  }
 
-.screen-darken{
-	height: 100%; width:0%;
-	z-index: 30;
-	position: fixed; top: 0; right: 0; 
-	opacity:0; visibility:hidden;
-	background-color: rgba(34, 34, 34, 0.6);
-	transition:opacity .2s linear, visibility 0.2s, width 2s ease-in;
-}
+  .btn22:hover{
+    background:rgba(255, 165, 0,.2);
+    color:var(--orange);
+  }
 
-.screen-darken.active{
-	z-index:10; 
-	transition:opacity .3s ease, width 0s;
-	opacity:1;
-	width:100%;
-	visibility:visible;
-}
+  header{
+    position: fixed;
+    top:0; left: 0; right:0;
+    background:#333;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding:12px 9%;
+    text-transform: capitalize;
+  }
 
-/* ============ mobile view ============ */
-@media all and (max-width: 991px) {
-	
-	.offcanvas-header{ display:block; }
+  header .logo{
+    font-size: 2.5rem;
+    font-weight: bolder;
+    color:#fff;
+    text-transform: uppercase;
+  }
 
-	.mobile-offcanvas{
-		visibility: hidden;
-		transform:translateX(-100%);
-		border-radius:0; 
-		display:block;
-		position: fixed;  top: 0; left:0;
-		height: 100%; width:80%;
-		z-index: 1200; 
-		overflow-y: scroll;
-		overflow-x: hidden;
-		transition: visibility .3s ease-in-out, transform .3s ease-in-out;
-	}
+  header .logo span{
+    color:var(--orange);
+  }
 
-	.mobile-offcanvas.show{
-		visibility: visible; 	transform: translateX(0);
-	}
-	.mobile-offcanvas .container, .mobile-offcanvas .container-fluid{
-		display: block;
-	}
+  header .navbar22 a{
+    color:#fff;
+    font-size: 18px;
+    margin:0 .1rem;
+    padding-right: 5px;
+    border-right:1px solid white;
+  }
 
-}	
-/* ============ mobile view .end// ============ */
+  header .navbar22 a:hover{
+    color:var(--orange);
+  }
+
+  header .icons i{
+    font-size: 18px;
+    color:#fff;
+    cursor: pointer;
+    margin-right: 2rem;
+  }
+
+  header .icons i:hover{
+    color:var(--orange);
+  }
+
+  #menu-bar{
+    color:#fff;
+    border:.1rem solid #fff;
+    border-radius: .5rem;
+    font-size: 18px;
+    padding:.5rem 1.2rem;
+    cursor: pointer;
+    display: none;
+  }
+  header .search-bar-container{
+    position: absolute;
+    top:100%; left: 0; right:0;
+    padding:5px;
+    background:#333;
+    border-top: .1rem solid rgba(255,255,255,.2);
+    display: flex;
+    align-items: center;
+    z-index: 1001;
+    clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+  }
+
+  header .search-bar-container.active{
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  }
+
+  header .search-bar-container #search-bar{
+    width:100%;
+    padding:1rem;
+    text-transform: none;
+    color:#333;
+    font-size: 18px;
+    border-radius: .5rem;
+  }
+
+  header .search-bar-container label{
+    color:#fff;
+    cursor: pointer;
+    font-size: 18px;
+    margin-left: 1.5rem;
+  }
+
+  header .search-bar-container label:hover{
+    color:var(--orange);
+  }
+
+  .login-form-container{
+    position: fixed;
+    top:-120%; left: 0;
+    z-index: 10000;
+    min-height: 100vh;
+    width:100%;
+    background:rgba(0,0,0,.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .login-form-container.active{
+    top:0;
+  }
+
+  .login-form-container form{
+    margin:2rem;
+    padding:1.5rem 2rem;
+    border-radius: .5rem;
+    background:#fff;
+    width:50rem;
+  }
+
+  .login-form-container form h3{
+    font-size: .5rem;
+    color:#444;
+    text-transform: uppercase;
+    text-align: center;
+    padding:.1rem 0;
+  }
+
+  .login-form-container form .box{
+    width:100%;
+    padding:1rem;
+    font-size: 1.7rem;
+    color:#333;
+    margin:.6rem 0;
+    border:.1rem solid rgba(0,0,0,.3);
+    text-transform: none;
+  }
+
+  .login-form-container form .box:focus{
+    border-color: var(--orange);;
+  }
+
+  .login-form-container form #remember{
+    margin:2rem 0;
+  }
+
+  .login-form-container form label{
+    font-size: 1.5rem;
+  }
+
+  .login-form-container form .btn22{
+    display: block;
+    width:100%;
+  }
+
+  .login-form-container form p{
+    padding:.5rem 0;
+    font-size: 1.5rem;
+    color:#666;
+  }
+
+  .login-form-container form p a{
+    color:var(--orange);
+  }
+
+  .login-form-container form p a:hover{
+    color:#333;
+    text-decoration: underline;
+  }
+
+  .login-form-container #form-close{
+    position: absolute;
+    top:2rem; right:3rem;
+    font-size: 5rem;
+    color:#fff;
+    cursor: pointer;
+  }
+
+  .footer{
+    background:#333;
+    text-transform: capitalize;
+    font-size: 16px;
+  }
+
+  .footer .box-container{
+    display: flex;
+    flex-wrap: wrap;
+    gap:1.5rem;
+  }
+
+  .footer .box-container .box{
+    padding:1rem 0;
+    flex:1 1 25rem;
+  }
+
+  .footer .box-container .box h3{
+    font-size: 2.5rem;
+    padding:.7rem 0;
+    color:#fff;
+  }
+
+  .footer .box-container .box p{
+    font-size: 1.5rem;
+    padding:.7rem 0;
+    color:#eee;
+  }
+
+  .footer .box-container .box a{
+    display: block;
+    font-size: 1.5rem;
+    padding:.7rem 0;
+    color:#eee;
+  }
+
+  .footer .box-container .box a:hover{
+    color:var(--orange);
+    text-decoration: underline;
+  }
+
+  .footer .credit{
+    text-align: center;
+    font-size: 18px;
+    font-weight: normal;
+    color:#fff;
+    padding: 10px;
+  }
+
+  .footer .credit span{
+    color:var(--orange);
+  }
+
+
+  /* media queries  */
+
+  @media (max-width:1200px){
+
+    html{
+      font-size: 55%;
+    }
+
+  }
+
+  @media (max-width:991px){
+
+    header{
+      padding:2rem;
+    }
+
+    section{
+      padding:2rem;
+    }
+
+  }
+
+  @media (max-width:768px){
+
+    #menu-bar{
+      display: initial;
+    }
+
+    header .navbar22{
+      position: absolute;
+      top:100%; right:0; left: 0;
+      background: #333;
+      border-top: .1rem solid rgba(255,255,255,.2);
+      padding:1rem 2rem;
+      clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+    }
+
+    header .navbar22.active{
+      clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    }
+
+    header .navbar22 a{
+      display: block;
+      border-radius: .5rem;
+      padding:1.5rem;
+      margin:1.5rem 0;
+      background:#222;
+    }
+
+  }
+
+  @media (max-width:450px){
+
+    html{
+      font-size: 50%;
+    }
+
+    .heading span{
+      font-size: 2.5rem;
+    }
+
+    .contact .row form .inputBox input{
+      width:100%;
+    }
+
+  }

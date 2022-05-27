@@ -12,67 +12,70 @@
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+
     <link rel="stylesheet" href="{{ asset('assets/css/styles.css') }}">
+
     @stack('styles')
 </head>
 
 <body>
-    <span class="screen-darken"></span>
-    <header class="section-header py-4">
-        <div class="container">
-            <h2>Win WIn Service Provider</h2>
+
+    <header>
+        <div id="menu-bar" class="fas fa-bars"></div>
+        <a href="#" class="logo"><img src="https://winwinsp.com/site/images/logo.png" style="max-height: 30px" /></a>
+        <div class="navbar22">
+            <a href="#home">home</a>
+            <a href="#book">book</a>
+            <a href="#packages">packages</a>
+            <a href="#services">services</a>
+            <a href="#contact">contact</a>
         </div>
+
+        <div class="icons">
+            <i class="fas fa-search" id="search-btn"></i>
+            <i class="fas fa-user" id="login-btn"></i>
+        </div>
+
+        <form action="" class="search-bar-container">
+            <input type="search" id="search-bar" placeholder="search here...">
+            <label for="search-bar" class="fas fa-search"></label>
+        </form>
+
     </header>
-    <div class="container">
 
-        <button data-trigger="navbar_main" class="d-lg-none btn btn-warning" type="button"> Show navbar </button>
-        <button data-trigger="card_mobile" class="d-lg-none btn btn-warning" type="button"> Show card </button>
+    <!-- header section ends -->
+    <!-- login form container  -->
 
-        <!-- ============= NAVBAR ============== -->
-        <nav id="navbar_main" class="mobile-offcanvas navbar navbar-expand-lg navbar-dark bg-primary">
-            <div class="container-fluid">
-                <div class="offcanvas-header">
-                    <button class="btn-close float-end"></button>
-                </div>
-                <a class="navbar-brand" href="#">Win WIn Service Provider</a>
+    {{-- <div class="login-form-container">
 
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="#"> Menu item </a></li>
-                    <li class="nav-item"><a class="nav-link" href="#"> Menu item </a></li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link  dropdown-toggle" href="#" data-bs-toggle="dropdown"> Dropdown right </a>
-                        <ul class="dropdown-menu dropdown-menu-end">
-                            <li><a class="dropdown-item" href="#"> Submenu item 1</a></li>
-                            <li><a class="dropdown-item" href="#"> Submenu item 2 </a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-        </nav>
+        <i class="fas fa-times" id="form-close"></i>
 
-        <section class="section-content py-5">
-            <main>
-                <div class="p-4">
-                    @yield('content')
-                </div>
-            </main>
-            <article class="card mobile-offcanvas bg-light" id="card_mobile">
-                <div class="card-body">
-                    <div class="offcanvas-header">
-                        <button class="btn-close float-end"></button>
-                    </div>
-                    <h5>This card becomes offcanvas on mobile view</h5>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                    consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                    cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                    proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                </div>
-            </article>
-        </section>
+        <form action="">
+            <h3>login</h3>
+            <input type="email" class="box" placeholder="enter your email">
+            <input type="password" class="box" placeholder="enter your password">
+            <input type="submit" value="login now" class="btn22" id="log">
+            <input type="checkbox" id="remember">
+            <label for="remember">remember me</label>
+            <p>forget password? <a href="#">click here</a></p>
+            <p>don't have and account? <a href="#">register now</a></p>
+        </form>
 
-    </div><!-- container //  -->
+    </div> --}}
+
+
+    <!-- Section starts  -->
+    <main>
+        <div class="p-4 h-100" style="margin-top: 80px; min-height:700px">
+            @yield('content')
+        </div>
+    </main>
+
+
+    <!-- footer section  -->
+    <section class="footer">
+        <h1 class="credit"> Created by <span> Iqbal Hossen </span> | all rights reserved ! </h1>
+    </section>
 
     <!-- jQuery -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -83,7 +86,11 @@
 
     <!-- Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+
     <script src="{{ asset('assets/js/custom-scripts.js') }}"></script>
+
     @stack('scripts')
 
 </body>
