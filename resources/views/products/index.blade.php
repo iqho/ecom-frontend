@@ -1,23 +1,7 @@
 @extends('layouts.app')
 @push('styles')
 <style type="text/css">
-    body {
-        margin: 0;
-        font-family: Nunito Sans;
-    }
-
-    h3 {
-        text-align: center;
-        font-size: 30px;
-        margin: 0;
-        padding-top: 10px;
-    }
-
-    a {
-        text-decoration: none;
-    }
-
-    .gallery {
+    .card-gallery {
         display: flex;
         flex-wrap: wrap;
         width: 100%;
@@ -25,8 +9,7 @@
         align-items: center;
         margin: 10px 0;
     }
-
-    .content {
+    .card-content {
         width: 22%;
         margin: 12px;
         box-sizing: border-box;
@@ -40,21 +23,24 @@
         transition: .4s;
     }
 
-    .content:hover {
+    .card-content:hover {
         box-shadow: 0 0 11px rgba(33, 33, 33, .2);
         transform: translate(0px, -8px);
         transition: .6s;
     }
-
-    img {
-        width: 200px;
-        height: 200px;
+    .card-content a {
+        text-decoration: none;
+        color:black;
+    }
+    .card-content img {
+        width: 100%;
+        max-height: 200px;
         text-align: center;
         margin: 0 auto;
         display: block;
     }
 
-    p {
+    .card-content p {
         text-align: center;
         color: #505050;
         padding: 5px;
@@ -62,14 +48,14 @@
         font-size: 15px;
     }
 
-    h6 {
+    .card-content h6 {
         font-size: 16px;
         text-align: center;
         color: #222f3e;
         margin: 0;
     }
 
-    ul {
+    .card-content ul {
         list-style-type: none;
         display: flex;
         justify-content: center;
@@ -78,27 +64,27 @@
         margin: 0px;
     }
 
-    li {
+    .card-content li {
         padding: 5px;
     }
 
-    .fa {
+    .card-content .fa {
         color: #ff9f43;
         font-size: 15px;
         transition: .4s;
         cursor: pointer;
     }
 
-    .fa:hover {
+    .card-content .fa:hover {
         transform: scale(1.3);
         transition: .6s;
     }
 
-    button {
+    .card-content button {
         text-align: center;
         font-size: 18px;
         color: #fff;
-        width: 100%;
+        width: 50%;
         padding: 5px;
         border: 0px;
         outline: none;
@@ -106,32 +92,32 @@
         margin-top: 5px;
     }
 
-    .buy-1 {
+    .card-content .buy-1 {
         background-color: #2183a2;
         border-bottom-right-radius: 10px;
     }
 
-    .buy-2 {
+    .card-content .buy-2 {
         background-color: #3b3e6e;
         border-bottom-left-radius: 10px;
     }
 
-    .buy-1:hover {
+    .card-content .buy-1:hover {
         background-color: #470058;
     }
 
-    .buy-2:hover {
+    .card-content .buy-2:hover {
         background-color: #583500;
     }
 
     @media(max-width: 1000px) {
-        .content {
+        .card-content {
             width: 25%;
         }
     }
 
     @media(max-width: 750px) {
-        .content {
+        .card-content {
             width: 100%;
         }
     }
@@ -139,10 +125,10 @@
 @endpush
 @section('content')
 
-<div class="gallery">
+<div class="card-gallery">
     @foreach ($products as $product)
-    <div class="content">
-        <div class="border border-secondary">
+    <div class="card-content">
+        <div>
             <a href="{{ route('products.details', $product['id']) }}">
                 @if ($product['image'])
                 <img src="{{ config('app.backend_url') }}/product-images/{{ $product['image'] }}" class="card-img-top"
@@ -166,7 +152,7 @@
             <li><i class="fa fa-star" aria-hidden="true"></i></li>
             <li><i class="fa fa-star" aria-hidden="true"></i></li>
         </ul>
-        <button class="buy-2 col-6">Add to Cart</button><button class="buy-1 col-6">Add to Wishlist</button>
+        <button class="col-6 buy-2">Add to Cart</button><button class="col-6 buy-1">Add to Wishlist</button>
     </div>
     @endforeach
 </div>

@@ -19,4 +19,8 @@ Route::get('details/{id}', function($id){
     return view('products.details', ['product'=>$product['product']]);
 })->name('products.details');
 
-Route::view('/vue', 'products.vue.index');
+Route::view('/vue', 'products.vue.index')->name('products.vue.index');
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

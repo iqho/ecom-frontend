@@ -10,38 +10,37 @@
 
     <title> @yield('title', 'Welcome to Win Win Service Provider') </title>
 
-    <!-- Styles -->
-    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.1.1/css/all.css" />
-
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
 
     <link rel="stylesheet" href="{{ asset('assets/css/styles.css') }}">
 
     @stack('styles')
 
 </head>
-
 <body>
 
-    <div class="container g-0 border shadow bg-white rounded position-relative">
+    <div class="container g-0 border shadow bg-white rounded">
         @include('layouts.navbar')
-        <main class="py-4 mb-5">
+        <main>
             @yield('content')
         </main>
-        <div class="position-absolute bottom-0 start-0 w-100 text-center py-2 bg-light border-top border-gray"> Copyright © 2022 Iqbal Hossen. All Rights Reserved </div>
     </div>
-
     <!-- jQuery -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
     <!-- Vuejs CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.27.2/axios.min.js"></script>
-    <script src="https://unpkg.com/vue@next"></script>}
+    <script src="https://unpkg.com/vue@next"></script>
 
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+
+    <script src="{{ asset('assets/js/custom-scripts.js') }}"></script>
+
     @stack('scripts')
-
 </body>
 
 </html>
