@@ -25,7 +25,7 @@
 
     <div class="container g-0 border shadow bg-white rounded position-relative">
         @include('layouts.navbar')
-        <main class="py-4 mb-5">
+        <main class="mt-1 mb-5">
             @yield('content')
         </main>
         <div class="position-absolute bottom-0 start-0 w-100 text-center py-2 bg-light border-top border-gray"> Copyright © 2022 Iqbal Hossen. All Rights Reserved </div>

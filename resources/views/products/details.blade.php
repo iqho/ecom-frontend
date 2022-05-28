@@ -1,39 +1,77 @@
 @extends('layouts.app')
 @section('title', 'Product Details Page')
+@push('styles')
+<style>
+    .card-content ul {
+        list-style-type: none;
+        display: flex;
+        justify-content: left;
+        align-items: center;
+        padding: 0px;
+        margin: 0px;
+    }
+
+    .card-content li {
+        padding: 5px;
+    }
+
+    .card-content .fa {
+        color: #ff9f43;
+        font-size: 15px;
+        transition: .4s;
+        cursor: pointer;
+    }
+
+    .card-content .fa:hover {
+        transform: scale(1.3);
+        transition: .6s;
+    }
+</style>
+@endpush
 @section('content')
     <div class="container p-2 h-100">
-        <div class="row">
-            <div class="col-md-12">
-                <a href="{{ url('/') }}" class="btn btn-success float-end mb-2">Back to Home</a>
+        <div class="row mx-4 my-2 g-0 border border-gray">
+            <div class="col-md-8 d-flex align-items-center" style="font-size: 18px;">
+                <a href="{{ url('/') }}" class="ms-2 font-weight-bold me-1" style="text-decoration: none">Home </a> > <span class="ms-1">{!! Str::limit($product['name'], 100) !!}</span>
+            </div>
+            <div class="col-md-4">
+                <a href="{{ url('/') }}" class="btn btn-success float-end">Back to Home</a>
             </div>
         </div>
-        <div class="row g-0 border border-gray-500">
-            <div class="col-md-5">
+        <div class="row g-0 border border-gray-500 mx-4">
+            <div class="col-md-4">
                 @if ($product['image'])
                     <img src="{{ config('app.backend_url') }}/product-images/{{ $product['image'] }}"
-                        class="img-fluid rounded mx-auto d-block" alt="{{ $product['name'] }}">
+                        class="img-fluid rounded mx-auto d-block" alt="{{ $product['name'] }}" style="max-height: 250px; width:100%">
                 @else
                     <img src="https://www.freeiconspng.com/uploads/no-image-icon-11.PNG"
                         class="img-fluid rounded mx-auto d-block" alt="{{ $product['name'] }}">
                 @endif
             </div>
-            <div class="col-md-7 p-2 position-relative">
+            <div class="col-md-8 p-2 card-content">
                 <h3 class="card-title pt-0 pb-2 px-1 border-bottom border-gray">{{ $product['name'] }}</h3>
-                <div class="badge p-2" style="font-size: 18px; background-color: #3b3e6e;">
+                <div class="badge bg-danger" style="font-size: 14px">{{ $product['category']['name'] }}</div>
+                <h6 style="font-size: 18px;" class="mb-0 mt-2">
                     @foreach ($product['product_prices'] as $price)
-                        {{ $price['price_type']['name'] }} : <strong>৳{{ $price['amount'] }}</strong>
+                        {{ $price['price_type']['name'] }} : <strong class="text-danger">৳{{ $price['amount'] }}</strong><br>
                     @endforeach
+                </h6>
+                <div style="font-size: 18px; text-left">
+                    <ul>
+                        <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                        <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                        <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                        <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                        <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                    </ul>
+                    <button class="btn btn-primary">Add to Cart</button>
+                    <button class="btn btn-success">Order Now</button>
+                    <button class="btn btn-warning">Add to Wishlist</button>
                 </div>
-                <p class="card-text">
+                <p class="card-text" style="text-align: justify;">
                     <strong>Description: </strong> <br>
                     {{ $product['description'] }}
                 </p>
-                <div class="position-absolute bottom-0 start-0 ms-2 mb-2">
-                    <button class="btn btn-lg btn-primary">Add to Cart</button>
-                </div>
-                <div class="position-absolute bottom-0 start-0 mb-2" style="margin-left:150px ">
-                    <button class="btn btn-lg btn-warning">Add to Wishlist</button>
-                </div>
             </div>
         </div>
     </div>

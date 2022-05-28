@@ -138,13 +138,14 @@
                 @endif
             </a>
         </div>
-        <h5 class="mt-1 mb-0"><a href="{{ route('products.details', $product['id']) }}">{{ $product['name'] }}</a></h5>
-        <p class="d-inline-block text-truncate" style="max-width: 250px;">{{ $product['description'] }}</p>
-        <h6>
+        <h4 class="mt-1 mb-0"><a href="{{ route('products.details', $product['id']) }}" class="text-primary font-weight-bold">{{ $product['name'] }}</a></h4>
+        <span class="badge bg-danger mt-1" style="font-size: 14px">{{ $product['category']['name'] }}</span>
+        <h6 class="mt-2">
             @foreach ($product['product_prices'] as $price)
             {{ $price['price_type']['name'] }} : <strong class="text-danger">৳{{ $price['amount'] }}</strong><br>
             @endforeach
         </h6>
+        <p class="text-center">{!! Str::limit($product['description'], 60) !!}</p>
         <ul>
             <li><i class="fa fa-star" aria-hidden="true"></i></li>
             <li><i class="fa fa-star" aria-hidden="true"></i></li>

@@ -126,16 +126,26 @@
 @section('content')
 <div id="app">
     <div class="card-gallery">
-        <div class="card-content" v-for="(value, key) in products" :key="key">
-            <div v-if="value.image !== null ">
-                <img :src="'http://127.0.0.1:8000/product-images/'+value.image" class="card-img-top" alt="...">
-            </div>
-            <div v-else>
-                <img src="https://www.freeiconspng.com/uploads/no-image-icon-11.PNG" class="card-img-top" alt="...">
-            </div>
-            <h5 class="mt-1 mb-0">@{{ value.name }}</h5>
-            <p>@{{ value.description }}</p>
-            <h6>$100.00</h6>
+        <div class="card-content" v-for="(product, key) in products" :key="key">
+            <a v-on:click='goto_route(product.id)' style="cursor: pointer">
+                <div v-if="product.image !== null ">
+                    <img :src="'http://127.0.0.1:8000/product-images/'+product.image" class="card-img-top" alt="...">
+                </div>
+                <div v-else>
+                    <img src="https://www.freeiconspng.com/uploads/no-image-icon-11.PNG" class="card-img-top" alt="...">
+                </div>
+            </a>
+
+            <h4 class="mt-1 mb-0">
+                <a v-on:click='goto_route(product.id)' style="cursor: pointer" class="text-primary font-weight-bold">
+                    @{{ product.name }}
+                </a>
+            </h4>
+            <span class="badge bg-danger mt-1" style="font-size: 14px">@{{ product.category.name }}</span>
+            <h6 class="mt-2" v-for="price in product.product_prices">
+                @{{ price.price_type.name }} : <strong class="text-danger">৳@{{ price.amount }}</strong>
+            </h6>
+            <p>@{{ getProductDescription(product) }}</p>
             <ul>
                 <li><i class="fa fa-star" aria-hidden="true"></i></li>
                 <li><i class="fa fa-star" aria-hidden="true"></i></li>
@@ -151,23 +161,35 @@
 
 @push('scripts')
 <script>
-    const {
-            createApp
-        } = Vue
+    const { createApp } = Vue
 
         createApp({
             data() {
                 return {
-                    message: 'Hello Vue!',
                     products: null,
                 }
             },
             created: function() {
+                let uri = `http://127.0.0.1:8000/api/api-products`;
                 axios
-                    .get("http://127.0.0.1:8000/api/api-products")
+                    .get(uri)
                     .then(res => {
                         this.products = res.data.product;
                     })
+            },
+            methods:{
+                goto_route: function (param1) {
+                    route = '{{ route("products.vue.details", ["id" => "?id?"]) }}'
+                    location.href = route.replace('?id?', param1)
+                },
+                getProductDescription (product) {
+                        let description = this.stripTags(product.description);
+
+                        return description.length > 60 ? description.substring(0, 60) + '...' : description;
+                    },
+                    stripTags (text) {
+                        return text.replace(/(<([^>]+)>)/ig, '');
+                    }
             }
         }).mount('#app')
 </script>
