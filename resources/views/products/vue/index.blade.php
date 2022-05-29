@@ -9,6 +9,7 @@
         align-items: center;
         margin: 10px 0;
     }
+
     .card-content {
         width: 22%;
         margin: 12px;
@@ -19,7 +20,7 @@
         border-top-right-radius: 10px;
         border-bottom-right-radius: 10px;
         padding-top: 10px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        min-height: 420px;
         transition: .4s;
     }
 
@@ -28,10 +29,12 @@
         transform: translate(0px, -8px);
         transition: .6s;
     }
+
     .card-content a {
         text-decoration: none;
-        color:black;
+        color: black;
     }
+
     .card-content img {
         width: 100%;
         max-height: 200px;
@@ -82,7 +85,7 @@
 
     .card-content button {
         text-align: center;
-        font-size: 18px;
+        font-size: 14px;
         color: #fff;
         width: 50%;
         padding: 5px;
@@ -126,13 +129,13 @@
 @section('content')
 <div id="app">
     <div class="card-gallery">
-        <div class="card-content" v-for="(product, key) in products" :key="key">
+        <div class="card-content position-relative shadow" v-for="(product, key) in products" :key="key">
             <a v-on:click='goto_route(product.id)' style="cursor: pointer">
-                <div v-if="product.image !== null ">
-                    <img :src="'http://127.0.0.1:8000/product-images/'+product.image" class="card-img-top" alt="...">
+                <div v-if="product.image !== null">
+                    <img :src="'http://127.0.0.1:8000/product-images/'+product.image" class="card-img-top" alt="..." style="width:100%; height:200px">
                 </div>
                 <div v-else>
-                    <img src="https://www.freeiconspng.com/uploads/no-image-icon-11.PNG" class="card-img-top" alt="...">
+                    <img src="https://www.freeiconspng.com/uploads/no-image-icon-11.PNG" class="card-img-top" alt="..." style="width:100%; height:200px">
                 </div>
             </a>
 
@@ -141,11 +144,16 @@
                     @{{ product.name }}
                 </a>
             </h4>
-            <span class="badge bg-danger mt-1" style="font-size: 14px">@{{ product.category.name }}</span>
-            <h6 class="mt-2" v-for="price in product.product_prices">
+            <div v-if="product.category !== null" class="badge bg-danger mt-1" style="font-size: 14px">
+                @{{ product.category.name }}
+            </div>
+            <div class="badge bg-danger mt-1" style="font-size: 14px" v-else>No Category</div>
+            <h6 v-if="product.product_prices !== null " class="mt-2" v-for="price in product.product_prices">
                 @{{ price.price_type.name }} : <strong class="text-danger">৳@{{ price.amount }}</strong>
             </h6>
-            <p>@{{ getProductDescription(product) }}</p>
+            <h6 class="mt-2">No Price</h6>
+            <p v-if="product.description !==null">@{{ getProductDescription(product) }}</p>
+            <p v-else>No Description</p>
             <ul>
                 <li><i class="fa fa-star" aria-hidden="true"></i></li>
                 <li><i class="fa fa-star" aria-hidden="true"></i></li>
@@ -153,7 +161,9 @@
                 <li><i class="fa fa-star" aria-hidden="true"></i></li>
                 <li><i class="fa fa-star" aria-hidden="true"></i></li>
             </ul>
-            <button class="buy-2 col-6">Add to Cart</button><button class="buy-1 col-6">Add to Wishlist</button>
+            <div class="position-absolute bottom-0 start-0 w-100">
+                <button class="col-6 buy-2">Add to Cart</button><button class="col-6 buy-1">Add to Wishlist</button>
+            </div>
         </div>
     </div>
 </div>

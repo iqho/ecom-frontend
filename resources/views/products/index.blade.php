@@ -9,6 +9,7 @@
         align-items: center;
         margin: 10px 0;
     }
+
     .card-content {
         width: 22%;
         margin: 12px;
@@ -19,8 +20,8 @@
         border-top-right-radius: 10px;
         border-bottom-right-radius: 10px;
         padding-top: 10px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         transition: .4s;
+        min-height: 420px;
     }
 
     .card-content:hover {
@@ -28,10 +29,12 @@
         transform: translate(0px, -8px);
         transition: .6s;
     }
+
     .card-content a {
         text-decoration: none;
-        color:black;
+        color: black;
     }
+
     .card-content img {
         width: 100%;
         max-height: 200px;
@@ -82,7 +85,7 @@
 
     .card-content button {
         text-align: center;
-        font-size: 18px;
+        font-size: 14px;
         color: #fff;
         width: 50%;
         padding: 5px;
@@ -127,19 +130,21 @@
 
 <div class="card-gallery">
     @foreach ($products as $product)
-    <div class="card-content">
+    <div class="card-content position-relative shadow">
         <div>
             <a href="{{ route('products.details', $product['id']) }}">
                 @if ($product['image'])
                 <img src="{{ config('app.backend_url') }}/product-images/{{ $product['image'] }}" class="card-img-top"
-                    alt="...">
+                    alt="..." style="width:100%; height:200px">
                 @else
-                <img src="https://www.freeiconspng.com/uploads/no-image-icon-11.PNG" class="card-img-top" alt="...">
+                <img src="https://www.freeiconspng.com/uploads/no-image-icon-11.PNG" class="card-img-top" alt="..."
+                    style="width:100%; height:200px">
                 @endif
             </a>
         </div>
-        <h4 class="mt-1 mb-0"><a href="{{ route('products.details', $product['id']) }}" class="text-primary font-weight-bold">{{ $product['name'] }}</a></h4>
-        <span class="badge bg-danger mt-1" style="font-size: 14px">{{ $product['category']['name'] }}</span>
+        <h4 class="mt-1 mb-0"><a href="{{ route('products.details', $product['id']) }}"
+                class="text-primary font-weight-bold">{{ $product['name'] }}</a></h4>
+        <span class="badge bg-danger mt-1" style="font-size: 14px">{{ $product['category']['name'] ?? '' }}</span>
         <h6 class="mt-2">
             @foreach ($product['product_prices'] as $price)
             {{ $price['price_type']['name'] }} : <strong class="text-danger">৳{{ $price['amount'] }}</strong><br>
@@ -153,7 +158,9 @@
             <li><i class="fa fa-star" aria-hidden="true"></i></li>
             <li><i class="fa fa-star" aria-hidden="true"></i></li>
         </ul>
-        <button class="col-6 buy-2">Add to Cart</button><button class="col-6 buy-1">Add to Wishlist</button>
+        <div class="position-absolute bottom-0 start-0 w-100">
+            <button class="col-6 buy-2">Add to Cart</button><button class="col-6 buy-1">Add to Wishlist</button>
+        </div>
     </div>
     @endforeach
 </div>
