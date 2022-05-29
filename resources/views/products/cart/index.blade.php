@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.app2')
 @push('styles')
 <style type="text/css">
     .card-gallery {
@@ -83,7 +83,7 @@
         transition: .6s;
     }
 
-    .card-content .button {
+    .card-content a {
         text-align: center;
         font-size: 14px;
         color: #fff;
@@ -128,47 +128,41 @@
 @endpush
 @section('content')
 
-    @if(session('success'))
-        <div class="row g-0 mb-2">
-                <div id="success" class="col-12 text-center text-success" style="font-size: 18px">{{ session('success') }}</div>
+<div class="card-gallery">
+    @foreach ($products as $product)
+    <div class="card-content position-relative shadow">
+        <div>
+            <a href="{{ route('products.details', $product['id']) }}">
+                @if ($product['image'])
+                <img src="{{ config('app.backend_url') }}/product-images/{{ $product['image'] }}" class="card-img-top"
+                    alt="..." style="width:100%; height:200px">
+                @else
+                <img src="https://www.freeiconspng.com/uploads/no-image-icon-11.PNG" class="card-img-top" alt="..."
+                    style="width:100%; height:200px">
+                @endif
+            </a>
         </div>
-    @endif
-    
-    <div class="card-gallery">
-        @foreach ($products as $product)
-        <div class="card-content position-relative shadow">
-            <div>
-                <a href="{{ route('products.details', $product['id']) }}">
-                    @if ($product['image'])
-                    <img src="{{ config('app.backend_url') }}/product-images/{{ $product['image'] }}" class="card-img-top"
-                        alt="..." style="width:100%; height:200px">
-                    @else
-                    <img src="https://www.freeiconspng.com/uploads/no-image-icon-11.PNG" class="card-img-top" alt="..."
-                        style="width:100%; height:200px">
-                    @endif
-                </a>
-            </div>
-            <h4 class="mt-1 mb-0"><a href="{{ route('products.details', $product['id']) }}"
-                    class="text-primary font-weight-bold">{{ $product['name'] }}</a></h4>
-            <span class="badge bg-danger mt-1" style="font-size: 14px">{{ $product['category']['name'] ?? '' }}</span>
-            <h6 class="mt-2">
-                @foreach ($product['product_prices'] as $price)
-                {{ $price['price_type']['name'] }} : <strong class="text-danger">৳{{ $price['amount'] }}</strong><br>
-                @endforeach
-            </h6>
-            <p class="text-center">{!! Str::limit($product['description'], 60) !!}</p>
-            <ul>
-                <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                <li><i class="fa fa-star" aria-hidden="true"></i></li>
-            </ul>
-            <div class="row g-0 position-absolute bottom-0 start-0 w-100">
-                <a href="{{ route('add.to.cart', $product['id']) }}" class="col-6 button buy-2">Add to Cart</a><a class="col-6 button buy-1">Add to Wishlist</a>
-            </div>
+        <h4 class="mt-1 mb-0"><a href="{{ route('products.details', $product['id']) }}"
+                class="text-primary font-weight-bold">{{ $product['name'] }}</a></h4>
+        <span class="badge bg-danger mt-1" style="font-size: 14px">{{ $product['category']['name'] ?? '' }}</span>
+        <h6 class="mt-2">
+            @foreach ($product['product_prices'] as $price)
+            {{ $price['price_type']['name'] }} : <strong class="text-danger">৳{{ $price['amount'] }}</strong><br>
+            @endforeach
+        </h6>
+        <p class="text-center">{!! Str::limit($product['description'], 60) !!}</p>
+        <ul>
+            <li><i class="fa fa-star" aria-hidden="true"></i></li>
+            <li><i class="fa fa-star" aria-hidden="true"></i></li>
+            <li><i class="fa fa-star" aria-hidden="true"></i></li>
+            <li><i class="fa fa-star" aria-hidden="true"></i></li>
+            <li><i class="fa fa-star" aria-hidden="true"></i></li>
+        </ul>
+        <div class="position-absolute bottom-0 start-0 w-100">
+            <a href="{{ route('add.to.cart', $product['id']) }}" class="col-6 buy-2" >Add to Cart</a><a class="col-6 buy-1">Add to Wishlist</a>
         </div>
-        @endforeach
     </div>
+    @endforeach
+</div>
 
 @endsection

@@ -54,21 +54,49 @@
                     </li>
                 @endguest
                 <li class="nav-item">
-                    <a class="nav-link py-0" href="#">Contact</a>
+                    <a class="nav-link py-0 custom-border-right" href="{{ route('cart') }}">Cart</a>
                 </li>
-
+                <li class="nav-item">
+                    <a class="nav-link py-0 custom-border-right" href="#">Contact</a>
+                </li>
             </ul>
-            <form class="d-flex">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Search</button>
-            </form>
-            <button type="button" class="btn btn-outline position-relative cart-btn">
-            <i class="fa-solid fa-cart-shopping fa-xl"></i>
-            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                99+
-                <span class="visually-hidden">unread messages</span>
-            </span>
-            </button>
+
+            <div class="btn-group mx-auto">
+                <button type="button" class="btn btn-outline position-relative cart-btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fa-solid fa-cart-shopping fa-xl"></i>
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                        {{ count((array) session('cart')) }}
+                    </span>
+                </button>
+                <div class="dropdown-menu" style="width: 200px">
+
+                    @if(session('cart'))
+                    @foreach(session('cart') as $id => $details)
+                    <div class="row cart-detail">
+                        <div class="col-lg-4 col-sm-4 col-4 cart-detail-img">
+                            @if ($details['image'])
+                            <img src="{{ config('app.backend_url') }}/product-images/{{ $details['image'] }}" />
+                            @else
+                            <img src="https://www.freeiconspng.com/uploads/no-image-icon-11.PNG" />
+                            @endif
+
+                        </div>
+                        <div class="col-lg-8 col-sm-8 col-8 cart-detail-product">
+                            <p>{{ $details['name'] }}</p>
+                            <span class="price text-info"> ${{ $details['price'] }}</span> <span class="count">
+                                Quantity:{{ $details['quantity'] }}</span>
+                        </div>
+                    </div>
+                    @endforeach
+                    @endif
+                    <div class="row">
+                        <div class="col-lg-12 col-sm-12 col-12 text-center">
+                            <a href="{{ route('cart') }}" class="btn btn-primary w-100">View all</a>
+                        </div>
+                    </div>
+
+                </div>
+              </div>
         </div>
     </div>
 </nav>

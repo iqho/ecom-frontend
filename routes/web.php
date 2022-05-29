@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Products\CartController;
 
 
 // Route::get('/', function () {
@@ -37,3 +38,15 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+
+
+Route::get('/ct', function () {
+    $products = Http::get(config('app.backend_url').'/api/api-products')->json();
+    return view('products.cart.index', ['products'=>$products['product']]);
+})->name('products.cart.index');
+
+Route::get('/cart', [CartController::class, 'cartIndex'])->name('cart');
+Route::get('add-to-cart/{id}', [CartController::class, 'addToCart'])->name('add.to.cart');
+Route::patch('update-cart', [CartController::class, 'update'])->name('update.cart');
+Route::delete('remove-from-cart', [CartController::class, 'remove'])->name('remove.from.cart');

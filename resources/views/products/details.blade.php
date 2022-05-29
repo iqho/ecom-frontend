@@ -29,6 +29,7 @@
 </style>
 @endpush
 @section('content')
+
 <div class="container p-2 h-100">
     <div class="row mx-4 my-2 g-0 border border-gray">
         <div class="col-md-8 d-flex align-items-center" style="font-size: 18px;">
@@ -39,6 +40,13 @@
             <a href="{{ url('/') }}" class="btn btn-success float-end">Back to Home</a>
         </div>
     </div>
+
+    @if(session('success'))
+    <div class="row g-0 my-2">
+            <div id="success" class="col-12 text-center text-success" style="font-size: 18px">{{ session('success') }}</div>
+    </div>
+    @endif
+
     <div class="row g-0 border border-gray-500 mx-4">
         <div class="col-md-4">
             @if ($product['image'])
@@ -66,7 +74,7 @@
                     <li><i class="fa fa-star" aria-hidden="true"></i></li>
                     <li><i class="fa fa-star" aria-hidden="true"></i></li>
                 </ul>
-                <button class="btn btn-primary">Add to Cart</button>
+                <a class="btn btn-primary" href="{{ route('add.to.cart', $product['id']) }}">Add to Cart</a>
                 <button class="btn btn-success">Order Now</button>
                 <button class="btn btn-warning">Add to Wishlist</button>
             </div>
