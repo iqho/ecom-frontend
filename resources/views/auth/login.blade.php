@@ -8,7 +8,7 @@
                 <div class="card-header">{{ __('Login') }}</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('login') }}">
+                    <form method="POST" action="http://127.0.0.1:8000/api/login">
                         @csrf
 
                         <div class="row mb-3">

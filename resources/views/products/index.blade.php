@@ -133,7 +133,11 @@
                 <div id="success" class="col-12 text-center text-success" style="font-size: 18px">{{ session('success') }}</div>
         </div>
     @endif
-    
+
+<script>
+swal("Hello world!");
+</script>
+
     <div class="card-gallery">
         @foreach ($products as $product)
         <div class="card-content position-relative shadow">
