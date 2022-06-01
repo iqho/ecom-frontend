@@ -29,17 +29,18 @@
         <main class="mt-1 mb-5 px-3">
             @yield('content')
         </main>
-        <div class="position-absolute bottom-0 start-0 w-100 text-center py-2 bg-light border-top border-gray"> Copyright © 2022 Iqbal Hossen. All Rights Reserved </div>
+        <div class="position-absolute bottom-0 start-0 w-100 text-center py-2 bg-light border-top border-gray">
+            Copyright © 2022 Iqbal Hossen. All Rights Reserved </div>
     </div>
 
     <!-- jQuery -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
     <!-- Vuejs CDN -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.27.2/axios.min.js"></script>
     <script src="https://unpkg.com/vue@next"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.27.2/axios.min.js"></script>
 
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="https: //unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
