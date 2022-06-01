@@ -9,8 +9,9 @@
 
                 <div class="card-body">
                     @{{ name }}
+                    <div id="myname"></div>
 
-                    <form @submit.prevent="onSubmitLoginForm">
+                    <form @submit.prevent="onSubmitLoginForm" id="onSubmitLoginForm">
                         @csrf
 
                         <div class="row mb-3">
@@ -89,7 +90,8 @@
     data() {
         return {
             email: '',
-            password: ''
+            password: '',
+            name: 'Iqbal'
         }
     },
   methods:{
@@ -109,28 +111,26 @@
 
             await axios.post(url, data).then((response) => {
                 if (response.data.length!==0) {
-                    localStorage.setItem("authToken", response.data.token);
-                    console.log(response.data.user);
-                    //window.location.href="/";
+                    localStorage.setItem("authToken", JSON.stringify(response.data.token));
+                    localStorage.setItem("userData", JSON.stringify(response.data.user));
+                    window.location.href="/login";
                 }
             }).catch((err) => {
 
             });
 
-
-            if(localStorage.getItem('authToken') !== null) {
-                // alert(localStorage.getItem('authToken'));
-                var divs = document.getElementById('loginForm');
-                divs.style.display = 'none';
-
-            }
-            else{
-                window.location.href="/login";
-            }
-
-
         }
-    }
+    },
+
+    mounted() {
+        if(localStorage.getItem('authToken') !== null) {
+                let onSubmitLoginForm = document.getElementById('onSubmitLoginForm');
+                onSubmitLoginForm.style.display = 'none';
+                var userName = JSON.parse(localStorage.getItem("userData"));
+                $('div#myname').text(userName.name);
+            }
+  }
+
 }).mount('#loginForm')
 </script>
 @endpush

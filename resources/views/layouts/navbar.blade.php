@@ -59,6 +59,9 @@
                 <li class="nav-item">
                     <a class="nav-link py-0 custom-border-right" href="#">Contact</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link py-0 custom-border-right" href="javascript:onLogout();">Logout</a>
+                </li>
             </ul>
 
             <div class="btn-group mx-auto">
@@ -100,3 +103,14 @@
         </div>
     </div>
 </nav>
+@push('scripts')
+    <script>
+        function onLogout() {
+            if(localStorage.getItem('authToken') !== null) {
+                localStorage.removeItem('authToken');
+                window.location.href="/login";
+                alert('Logout Successfully !');
+            }
+        }
+    </script>
+@endpush
