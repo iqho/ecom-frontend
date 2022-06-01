@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 class HomeController extends Controller
 {
@@ -11,10 +12,7 @@ class HomeController extends Controller
      *
      * @return void
      */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
+
 
     /**
      * Show the application dashboard.
@@ -24,5 +22,11 @@ class HomeController extends Controller
     public function index()
     {
         return view('home');
+    }
+
+    public function login2(){
+        $res = Http::post('http://127.0.0.1:8000/api/login', ['email', 'password']);
+        echo $res->getStatusCode(); // 200
+        echo $res->getBody(); // { "type": "User", ....
     }
 }
