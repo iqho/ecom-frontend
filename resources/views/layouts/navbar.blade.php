@@ -29,9 +29,11 @@
                     @endif
 
                     @if (Route::has('register'))
-                        <li class="nav-item">
+                        <li class="nav-item" id="registerButton">
                             <a class="nav-link py-0 custom-border-right {{ Request::routeIs('register') ? 'active' : '' }}"
                                 href="{{ route('register') }}">{{ __('Register') }}</a>
+                        </li>
+                        <li class="nav-item"><a class="nav-link py-0 custom-border-right href=" #" id="myname"></a>
                         </li>
                     @endif
                 @else
@@ -65,7 +67,8 @@
             </ul>
 
             <div class="btn-group mx-auto">
-                <button type="button" class="btn btn-outline position-relative cart-btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                <button type="button" class="btn btn-outline position-relative cart-btn dropdown-toggle"
+                    data-bs-toggle="dropdown" aria-expanded="false">
                     <i class="fa-solid fa-cart-shopping fa-xl"></i>
                     <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                         {{ count((array) session('cart')) }}
@@ -73,24 +76,26 @@
                 </button>
                 <div class="dropdown-menu" style="width: 200px">
 
-                    @if(session('cart'))
-                    @foreach(session('cart') as $id => $details)
-                    <div class="row cart-detail">
-                        <div class="col-lg-4 col-sm-4 col-4 cart-detail-img">
-                            @if ($details['image'])
-                            <img src="{{ config('app.backend_url') }}/product-images/{{ $details['image'] }}" />
-                            @else
-                            <img src="https://www.freeiconspng.com/uploads/no-image-icon-11.PNG" />
-                            @endif
+                    @if (session('cart'))
+                        @foreach (session('cart') as $id => $details)
+                            <div class="row cart-detail">
+                                <div class="col-lg-4 col-sm-4 col-4 cart-detail-img">
+                                    @if ($details['image'])
+                                        <img
+                                            src="{{ config('app.backend_url') }}/product-images/{{ $details['image'] }}" />
+                                    @else
+                                        <img src="https://www.freeiconspng.com/uploads/no-image-icon-11.PNG" />
+                                    @endif
 
-                        </div>
-                        <div class="col-lg-8 col-sm-8 col-8 cart-detail-product">
-                            <p>{{ $details['name'] }}</p>
-                            <span class="price text-info"> ${{ $details['price'] }}</span> <span class="count">
-                                Quantity:{{ $details['quantity'] }}</span>
-                        </div>
-                    </div>
-                    @endforeach
+                                </div>
+                                <div class="col-lg-8 col-sm-8 col-8 cart-detail-product">
+                                    <p>{{ $details['name'] }}</p>
+                                    <span class="price text-info"> ${{ $details['price'] }}</span> <span
+                                        class="count">
+                                        Quantity:{{ $details['quantity'] }}</span>
+                                </div>
+                            </div>
+                        @endforeach
                     @endif
                     <div class="row">
                         <div class="col-lg-12 col-sm-12 col-12 text-center">
@@ -99,18 +104,27 @@
                     </div>
 
                 </div>
-              </div>
+            </div>
         </div>
     </div>
 </nav>
 @push('scripts')
     <script>
         function onLogout() {
-            if(localStorage.getItem('authToken') !== null) {
+            if (localStorage.getItem('authToken') !== null) {
                 localStorage.removeItem('authToken');
-                window.location.href="/login";
+                localStorage.removeItem('userData');
+                window.location.href = "/login";
                 alert('Logout Successfully !');
             }
+        }
+
+        if (localStorage.getItem('authToken') !== null) {
+            let registerButton = document.getElementById('registerButton');
+            registerButton.style.display = "none";
+            var userName = JSON.parse(localStorage.getItem("userData"));
+            $('a#myname').text(userName.name);
+            //console.log(userName.name);
         }
     </script>
 @endpush
