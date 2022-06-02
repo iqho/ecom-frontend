@@ -22,22 +22,20 @@
 
                 @guest
                     @if (Route::has('login'))
-                        <li class="nav-item">
+                        <li class="nav-item" id="LoginButton">
                             <a class="nav-link py-0 custom-border-right {{ Request::routeIs('login') ? 'active' : '' }}"
                                 href="{{ route('login') }}">{{ __('Login') }}</a>
                         </li>
                     @endif
 
                     @if (Route::has('register'))
-                        <li class="nav-item" id="registerButton">
+                        <li class="nav-item" id="RegisterButton">
                             <a class="nav-link py-0 custom-border-right {{ Request::routeIs('register') ? 'active' : '' }}"
                                 href="{{ route('register') }}">{{ __('Register') }}</a>
                         </li>
-                        <li class="nav-item"><a class="nav-link py-0 custom-border-right href=" #" id="myname"></a>
-                        </li>
                     @endif
                 @else
-                    <li class="nav-item dropdown">
+                     <li class="nav-item dropdown">
                         <a id="navbarDropdown" class="nav-link py-0 custom-border-right dropdown-toggle" href="#"
                             role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                             {{ Auth::user()->name }}
@@ -55,14 +53,17 @@
                         </div>
                     </li>
                 @endguest
-                <li class="nav-item">
-                    <a class="nav-link py-0 custom-border-right" href="{{ route('cart') }}">Cart</a>
+                <li class="nav-item" id="userNameButton">
+                    <a class="nav-link py-0 custom-border-right" href="#" id="myName">userName</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link py-0 custom-border-right" href="#">Contact</a>
+                    <a class="nav-link py-0 custom-border-right {{ Request::routeIs('cart') ? 'active' : '' }}" href="{{ route('cart') }}">Cart</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link py-0 custom-border-right" href="javascript:onLogout();">Logout</a>
+                    <a class="nav-link py-0 custom-border-bottom" href="#">Contact</a>
+                </li>
+                <li class="nav-item custom-border-left" id="logoutButton">
+                    <a class="nav-link py-0" href="javascript:onLogout()">Logout</a>
                 </li>
             </ul>
 
@@ -110,21 +111,27 @@
 </nav>
 @push('scripts')
     <script>
+        document.getElementById("logoutButton").style.display = "none";
+        document.getElementById("userNameButton").style.display = "none";
         function onLogout() {
             if (localStorage.getItem('authToken') !== null) {
                 localStorage.removeItem('authToken');
                 localStorage.removeItem('userData');
                 window.location.href = "/login";
                 alert('Logout Successfully !');
+
             }
         }
 
-        if (localStorage.getItem('authToken') !== null) {
-            let registerButton = document.getElementById('registerButton');
-            registerButton.style.display = "none";
-            var userName = JSON.parse(localStorage.getItem("userData"));
-            $('a#myname').text(userName.name);
-            //console.log(userName.name);
+        if (localStorage.getItem('userData') !== null) {
+            document.getElementById("logoutButton").style.display = "block";
+            document.getElementById("userNameButton").style.display = "block";
+
+            document.getElementById("LoginButton").style.display = "none";
+            document.getElementById("RegisterButton").style.display = "none";
+
+             var userName = JSON.parse(localStorage.getItem("userData"));
+             $('a#myName').text(userName.name);
         }
     </script>
 @endpush

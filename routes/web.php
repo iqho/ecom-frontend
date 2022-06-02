@@ -31,7 +31,8 @@ Route::get('/vue/{id}', function($id){
 Auth::routes();
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
-Route::post('/login2', [HomeController::class, 'login2'])->name('login2');
+Route::get('/login2', [HomeController::class, 'login2'])->name('login2');
+
 
 
 

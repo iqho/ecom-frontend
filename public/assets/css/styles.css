@@ -17,10 +17,17 @@
     .custom-border-right {
         border-right: 1px solid rgb(179, 179, 179);
     }
+    .custom-border-left {
+        border-left: 1px solid rgb(179, 179, 179);
+    }
+
 }
 
 @media screen and (max-width: 992px) {
     .custom-border-right {
+        border-bottom: 1px solid rgb(179, 179, 179);
+    }
+    .custom-border-bottom {
         border-bottom: 1px solid rgb(179, 179, 179);
     }
 

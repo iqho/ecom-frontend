@@ -1,15 +1,14 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container" id="registerForm">
+    <div class="container" id="onSubmitRegisterForm">
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
                     <div class="card-header">{{ __('Register') }}</div>
-
                     <div class="card-body">
 
-                        <form @submit.prevent="onSubmitRegisterForm" id="onSubmitRegisterForm">
+                        <form @submit.prevent="onSubmitRegisterForm">
                             @csrf
 
                             <div class="row mb-3">
@@ -90,9 +89,7 @@
 
 @push('scripts')
     <script>
-        const {
-            createApp
-        } = Vue
+        const { createApp } = Vue
         createApp({
             data() {
                 return {
@@ -104,41 +101,36 @@
             },
             methods: {
                 async onSubmitRegisterForm() {
-                    // validate user input data
-                    if (this.email === '' || this.password === '') {
-                        alert('email or password can\'t be empty');
-                        return;
-                    }
-
-                    // send request to api server
-                    const url = 'http://127.0.0.1:8000/api/register'
-                    const data = {
-                        name: this.name,
-                        email: this.email,
-                        password: this.password
-                    };
-
-                    await axios.post(url, data).then((response) => {
-                        if (response.data.length !== 0) {
-                            localStorage.setItem("authToken", JSON.stringify(response.data.token));
-                            localStorage.setItem("userData", JSON.stringify(response.data.user));
-                            window.location.reload();
+                        // validate user input data
+                        if (this.name === '' || this.email === '' || this.password === '') {
+                            alert('Name, Email or Password can\'t be Empty');
+                            return;
                         }
-                    }).catch((err) => {
 
-                    });
+                        // send request to api server
+                        const url = 'http://127.0.0.1:8000/api/register'
+                        const data = {
+                            name: this.name,
+                            email: this.email,
+                            password: this.password
+                        };
 
+                        await axios.post(url, data).then((response) => {
+                            if (response.data.length!==0) {
+                                localStorage.setItem("authToken", JSON.stringify(response.data.token));
+                                localStorage.setItem("userData", JSON.stringify(response.data.user));
+                                window.location.href="/login";
+                            }
+                        })
+                        .catch((err) => {});
+                    }
                 }
-            },
+        }).mount('#registerForm');
 
-            mounted() {
-                if (localStorage.getItem('authToken') !== null) {
-                    let onSubmitRegisterForm = document.getElementById('onSubmitRegisterForm');
-                    onSubmitRegisterForm.style.display = "none";
-                    //console.log(localStorage.getItem('userData'));
-                }
-            }
+        if (localStorage.getItem('authToken') !== null)
+        {
+          document.getElementById("onSubmitRegisterForm").style.display = "none";
+        }
 
-        }).mount('#registerForm')
     </script>
 @endpush
