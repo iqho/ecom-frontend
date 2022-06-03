@@ -70,7 +70,7 @@
 .dropdown .dropdown-menu{
     padding:20px;
     top:30px !important;
-    width:350px !important;
+    width:450px !important;
     left:-110px !important;
     box-shadow:0px 5px 30px black;
 }
@@ -113,7 +113,9 @@
     content: " ";
     position:absolute;
     top:-20px;
-    right:50px;
+    right:140px;
     border:10px solid transparent;
     border-bottom-color:#fff;
 }
+
+[v-cloak] { display: none; } /* Display none for vue success or error message div hide when page load */

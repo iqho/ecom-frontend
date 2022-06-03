@@ -8,10 +8,7 @@
                 <div class="card-header">{{ __('Login') }} </div>
 
                 <div class="card-body">
-                    <div class="row" v-cloak>
-                        <div v-if="message.length" class="alert alert-danger text-center p-2" role="alert">@{{ message
-                            }}</div>
-                    </div>
+                    @{{ name }}
                     <form @submit.prevent="onSubmitLoginForm">
                         @csrf
 
@@ -22,7 +19,7 @@
                             <div class="col-md-6">
                                 <input id="email" v-model="email" type="email"
                                     class="form-control @error('email') is-invalid @enderror" name="email"
-                                    value="{{ old('email') }}" autocomplete="email" autofocus required>
+                                    value="{{ old('email') }}" autocomplete="email" autofocus>
 
                                 @error('email')
                                 <span class="invalid-feedback" role="alert">
@@ -39,7 +36,7 @@
                             <div class="col-md-6">
                                 <input id="password" v-model="password" type="password"
                                     class="form-control @error('password') is-invalid @enderror" name="password"
-                                    autocomplete="current-password" required>
+                                 autocomplete="current-password">
 
                                 @error('password')
                                 <span class="invalid-feedback" role="alert">
@@ -92,7 +89,7 @@
         return {
             email: '',
             password: '',
-            message: ''
+            name: 'Iqbal'
         }
     },
   methods:{
@@ -109,26 +106,21 @@
                 email: this.email,
                 password: this.password,
             };
-
+            return data;
             await axios.post(url, data).then((response) => {
-                if(response.data.isValid == false){
-                    this.message = response.data.message;
-                    //console.log(response.data.message);
-                }
-                else{
+                if (response.data.length!==0) {
                     localStorage.setItem("authToken", JSON.stringify(response.data.token));
                     localStorage.setItem("userData", JSON.stringify(response.data.user));
-                    window.location.href="/";
+                    window.location.href="/login";
                 }
+            }).catch((err) => {
 
-            }).catch((error) => {
-                console.log('error axios request', error.data);
             });
 
         }
     }
 
-}).mount('#onSubmitLoginForm');
+}).mount('#loginForm');
 
 if(localStorage.getItem('authToken') !== null)
 {

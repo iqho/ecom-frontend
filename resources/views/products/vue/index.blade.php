@@ -127,15 +127,17 @@
 </style>
 @endpush
 @section('content')
-<div id="app">
+<div id="app" v-cloak>
     <div class="card-gallery">
         <div class="card-content position-relative shadow" v-for="(product, key) in products" :key="key">
             <a v-on:click='goto_route(product.id)' style="cursor: pointer">
                 <div v-if="product.image !== null">
-                    <img :src="'http://127.0.0.1:8000/product-images/'+product.image" class="card-img-top" alt="..." style="width:100%; height:200px">
+                    <img :src="'http://127.0.0.1:8000/product-images/'+product.image" class="card-img-top" alt="..."
+                        style="width:100%; height:200px">
                 </div>
                 <div v-else>
-                    <img src="https://www.freeiconspng.com/uploads/no-image-icon-11.PNG" class="card-img-top" alt="..." style="width:100%; height:200px">
+                    <img src="https://www.freeiconspng.com/uploads/no-image-icon-11.PNG" class="card-img-top" alt="..."
+                        style="width:100%; height:200px">
                 </div>
             </a>
 

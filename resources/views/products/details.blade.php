@@ -43,7 +43,7 @@
 
     @if(session('success'))
     <div class="row g-0 my-2">
-            <div id="success" class="col-12 text-center text-success" style="font-size: 18px">{{ session('success') }}</div>
+        <div id="success" class="col-12 text-center text-success" style="font-size: 18px">{{ session('success') }}</div>
     </div>
     @endif
 
@@ -62,9 +62,19 @@
             <h3 class="card-title pt-0 pb-2 px-1 border-bottom border-gray">{{ $product['name'] }}</h3>
             <div class="badge bg-danger" style="font-size: 14px">{{ $product['category']['name'] ?? '' }}</div>
             <h6 style="font-size: 18px;" class="mb-0 mt-2">
+                {{ \Carbon\Carbon::now() }}
                 @foreach ($product['product_prices'] as $price)
-                {{ $price['price_type']['name'] }} : <strong class="text-danger">৳{{ $price['amount'] }}</strong><br>
-                @endforeach
+                @if (($price['start_date'] <= \Carbon\Carbon::now()) && ($price['end_date']> \Carbon\Carbon::now()))
+                    <div class="mr-1">{{ $price['price_types']['name'] }} : ৳ {{ $price['amount'] }}</div>
+                    @break
+                    @elseif ($price['price_type_id'] == 1)
+                    <div class="mr-1">{{ $price['price_type']['name'] }} : ৳{{
+                        $price['amount'] }}</div>
+                    @break
+                    @else
+                    <div class="mr-1">No Price</div>
+                    @endif
+                    @endforeach
             </h6>
             <div style="font-size: 18px; text-left">
                 <ul>

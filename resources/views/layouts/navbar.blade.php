@@ -21,48 +21,49 @@
                 </li>
 
                 @guest
-                    @if (Route::has('login'))
-                        <li class="nav-item" id="LoginButton">
-                            <a class="nav-link py-0 custom-border-right {{ Request::routeIs('login') ? 'active' : '' }}"
-                                href="{{ route('login') }}">{{ __('Login') }}</a>
-                        </li>
-                    @endif
+                @if (Route::has('login'))
+                <li class="nav-item" id="LoginButton">
+                    <a class="nav-link py-0 custom-border-right {{ Request::routeIs('login') ? 'active' : '' }}"
+                        href="{{ route('login') }}">{{ __('Login') }}</a>
+                </li>
+                @endif
 
-                    @if (Route::has('register'))
-                        <li class="nav-item" id="RegisterButton">
-                            <a class="nav-link py-0 custom-border-right {{ Request::routeIs('register') ? 'active' : '' }}"
-                                href="{{ route('register') }}">{{ __('Register') }}</a>
-                        </li>
-                    @endif
+                @if (Route::has('register'))
+                <li class="nav-item" id="RegisterButton">
+                    <a class="nav-link py-0 custom-border-right {{ Request::routeIs('register') ? 'active' : '' }}"
+                        href="{{ route('register') }}">{{ __('Register') }}</a>
+                </li>
+                @endif
                 @else
-                     <li class="nav-item dropdown">
-                        <a id="navbarDropdown" class="nav-link py-0 custom-border-right dropdown-toggle" href="#"
-                            role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                            {{ Auth::user()->name }}
+                <li class="nav-item dropdown">
+                    <a id="navbarDropdown" class="nav-link py-0 custom-border-right dropdown-toggle" href="#"
+                        role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                        {{ Auth::user()->name }}
+                    </a>
+
+                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="{{ route('logout') }}"
+                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            {{ __('Logout') }}
                         </a>
 
-                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="{{ route('logout') }}"
-                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                {{ __('Logout') }}
-                            </a>
-
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                @csrf
-                            </form>
-                        </div>
-                    </li>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                            @csrf
+                        </form>
+                    </div>
+                </li>
                 @endguest
-                <li class="nav-item" id="userNameButton">
+                <li class="nav-item" id="userNameButton" v-cloak>
                     <a class="nav-link py-0 custom-border-right" href="#" id="myName">userName</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link py-0 custom-border-right {{ Request::routeIs('cart') ? 'active' : '' }}" href="{{ route('cart') }}">Cart</a>
+                    <a class="nav-link py-0 custom-border-right {{ Request::routeIs('cart') ? 'active' : '' }}"
+                        href="{{ route('cart') }}">Cart</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link py-0 custom-border-bottom" href="#">Contact</a>
                 </li>
-                <li class="nav-item custom-border-left" id="logoutButton">
+                <li class="nav-item custom-border-left" id="logoutButton" v-cloak>
                     <a class="nav-link py-0" href="javascript:onLogout()">Logout</a>
                 </li>
             </ul>
@@ -78,25 +79,23 @@
                 <div class="dropdown-menu" style="width: 200px">
 
                     @if (session('cart'))
-                        @foreach (session('cart') as $id => $details)
-                            <div class="row cart-detail">
-                                <div class="col-lg-4 col-sm-4 col-4 cart-detail-img">
-                                    @if ($details['image'])
-                                        <img
-                                            src="{{ config('app.backend_url') }}/product-images/{{ $details['image'] }}" />
-                                    @else
-                                        <img src="https://www.freeiconspng.com/uploads/no-image-icon-11.PNG" />
-                                    @endif
+                    @foreach (session('cart') as $id => $details)
+                    <div class="row cart-detail">
+                        <div class="col-lg-4 col-sm-4 col-4 cart-detail-img">
+                            @if ($details['image'])
+                            <img src="{{ config('app.backend_url') }}/product-images/{{ $details['image'] }}" />
+                            @else
+                            <img src="https://www.freeiconspng.com/uploads/no-image-icon-11.PNG" />
+                            @endif
 
-                                </div>
-                                <div class="col-lg-8 col-sm-8 col-8 cart-detail-product">
-                                    <p>{{ $details['name'] }}</p>
-                                    <span class="price text-info"> ${{ $details['price'] }}</span> <span
-                                        class="count">
-                                        Quantity:{{ $details['quantity'] }}</span>
-                                </div>
-                            </div>
-                        @endforeach
+                        </div>
+                        <div class="col-lg-8 col-sm-8 col-8 cart-detail-product">
+                            <p>{{ $details['name'] }}</p>
+                            <span class="price text-info"> ${{ $details['price'] }}</span> <span class="count">
+                                Quantity:{{ $details['quantity'] }}</span>
+                        </div>
+                    </div>
+                    @endforeach
                     @endif
                     <div class="row">
                         <div class="col-lg-12 col-sm-12 col-12 text-center">
@@ -110,8 +109,8 @@
     </div>
 </nav>
 @push('scripts')
-    <script>
-        document.getElementById("logoutButton").style.display = "none";
+<script>
+    document.getElementById("logoutButton").style.display = "none";
         document.getElementById("userNameButton").style.display = "none";
         function onLogout() {
             if (localStorage.getItem('authToken') !== null) {
@@ -133,5 +132,5 @@
              var userName = JSON.parse(localStorage.getItem("userData"));
              $('a#myName').text(userName.name);
         }
-    </script>
+</script>
 @endpush
