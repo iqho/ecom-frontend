@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Auth\ApiLoginController;
 use App\Http\Controllers\Products\CartController;
 
 
@@ -28,13 +29,12 @@ Route::get('/vue/{id}', function($id){
     return view('products.vue.details', compact('id'));
 })->name('products.vue.details');
 
-Auth::routes();
 
-Route::get('/home', [HomeController::class, 'index'])->name('home');
-Route::get('/login2', [HomeController::class, 'login2'])->name('login2');
+//Route::get('/login2', [HomeController::class, 'login2'])->name('login2');
 
-
-
+// Route::group(['middleware' => ['auth:api','api.token']], function () {
+//     Route::get('/home', [HomeController::class, 'index'])->name('home');
+// });
 
 
 
@@ -47,4 +47,14 @@ Route::get('/cart', [CartController::class, 'cartIndex'])->name('cart');
 Route::get('add-to-cart/{id}', [CartController::class, 'addToCart'])->name('add.to.cart');
 Route::patch('update-cart', [CartController::class, 'update'])->name('update.cart');
 Route::delete('remove-from-cart', [CartController::class, 'remove'])->name('remove.from.cart');
+
+
+Auth::routes();
+
+Route::get('/login2', [ApiLoginController::class, 'login'])->name('apiLogin');
+Route::post('/api-login', [ApiLoginController::class, 'loginData'])->name('loginData');
+
+Route::group(['middleware' => 'web'], function () {
+    Route::get('/home', [HomeController::class, 'index'])->name('home');
+});
 

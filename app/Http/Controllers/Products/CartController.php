@@ -40,6 +40,7 @@ class CartController extends Controller
         $product = Http::get(config('app.backend_url') . '/api/api-products/' . $id)->json();
         $cart = session()->get('cart', []);
 
+        $pr = 0;
         foreach ($product['product']['product_prices'] as $key => $price) {
             if ($price['start_date'] <= Carbon::now() && $price['end_date'] > Carbon::now()) {
                 $pr = $price['amount'];

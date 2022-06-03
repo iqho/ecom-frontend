@@ -1,27 +1,34 @@
 @extends('layouts.app')
 
 @section('content')
-    <div id="loginForm" class="container">
+    <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header">{{ __('Login') }} </div>
+                    <div class="card-header">{{ __('Login Auth Using Id ') }} </div>
 
                     <div class="card-body">
-                        @{{ name }}
-                        <div id="myname"></div>
 
-                        <form method="post" action="{{ route('login') }}">
+
+                        @if (session()->has('errorMsg'))
+                            <div class="row text-center">
+                                <div class="alert alert-danger">
+                                    {{ session()->get('errorMsg') }}
+                                </div>
+                            </div>
+                        @endif
+
+                        <form method="post" action="{{ route('loginData') }}">
                             @csrf
+                            @method('POST')
 
                             <div class="row mb-3">
                                 <label for="email"
                                     class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
 
                                 <div class="col-md-6">
-                                    <input id="email" v-model="email" type="email"
-                                        class="form-control @error('email') is-invalid @enderror" name="email"
-                                        value="{{ old('email') }}" autocomplete="email" autofocus>
+                                    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
+                                        name="email" value="{{ old('email') }}" autocomplete="email" autofocus required>
 
                                     @error('email')
                                         <span class="invalid-feedback" role="alert">
@@ -36,9 +43,9 @@
                                     class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
 
                                 <div class="col-md-6">
-                                    <input id="password" v-model="password" type="password"
+                                    <input id="password" type="password"
                                         class="form-control @error('password') is-invalid @enderror" name="password"
-                                        autocomplete="current-password">
+                                        autocomplete="current-password" required>
 
                                     @error('password')
                                         <span class="invalid-feedback" role="alert">
@@ -81,65 +88,3 @@
         </div>
     </div>
 @endsection
-
-@push('scripts')
-    <script>
-        const {
-            createApp
-        } = Vue
-        createApp({
-            data() {
-                return {
-                    email: '',
-                    password: '',
-                    name: 'Iqbal'
-                }
-            },
-            methods: {
-                async onSubmitLoginForm() {
-                    // validate user input data
-                    if (this.email === '' || this.password === '') {
-                        alert('email or password can\'t be empty');
-                        return;
-                    }
-
-                    // send request to api server
-                    const url = 'http://127.0.0.1:8000/api/login'
-                    const data = {
-                        email: this.email,
-                        password: this.password,
-                    };
-
-                    await axios.post(url, data).then((response) => {
-                        if (response.data.length !== 0) {
-                            localStorage.setItem("authToken", JSON.stringify(response.data.token));
-                            localStorage.setItem("userData", JSON.stringify(response.data.user));
-                            window.location.href = "/login";
-                        }
-                    }).catch((err) => {
-
-                    });
-
-                }
-            },
-
-            mounted() {
-                if (localStorage.getItem('authToken') !== null) {
-                    let onSubmitLoginForm = document.getElementById('onSubmitLoginForm');
-                    onSubmitLoginForm.style.visibility = "hidden";
-                    var userName = JSON.parse(localStorage.getItem("userData"));
-                    $('div#myname').text(userName.name);
-                }
-            }
-
-        }).mount('#loginForm')
-    </script>
-@endpush
-
-
-{{-- get data from login form --}}
-{{-- validate input data --}}
-{{-- send axios request to api server --}}
-{{-- check response status 200 --}}
-{{-- if response 200 then save user token and user information to localstorage --}}
-{{-- redirect to the dashboard --}}
