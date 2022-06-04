@@ -14,34 +14,21 @@ use App\Http\Controllers\Products\CartController;
 
 
 Route::get('/', function () {
-    $products = Http::get(config('app.backend_url').'/api/api-products')->json();
-    return view('products.index', ['products'=>$products['product']]);
+    $products = Http::get(config('app.backend_url') . '/api/api-products')->json();
+    return view('products.index', ['products' => $products['product']]);
 })->name('products.index');
 
-Route::get('details/{id}', function($id){
-    $product = Http::get(config('app.backend_url').'/api/api-products/'.$id)->json();
-    return view('products.details', ['product'=>$product['product']]);
+Route::get('details/{id}', function ($id) {
+    $product = Http::get(config('app.backend_url') . '/api/api-products/' . $id)->json();
+    return view('products.details', ['product' => $product['product']]);
 })->name('products.details');
 
 Route::view('/vue', 'products.vue.index')->name('products.vue.index');
 //Route::view('/vue/{id}', 'products.vue.details')->name('products.vue.details');
-Route::get('/vue/{id}', function($id){
+Route::get('/vue/{id}', function ($id) {
     return view('products.vue.details', compact('id'));
 })->name('products.vue.details');
 
-
-//Route::get('/login2', [HomeController::class, 'login2'])->name('login2');
-
-// Route::group(['middleware' => ['auth:api','api.token']], function () {
-//     Route::get('/home', [HomeController::class, 'index'])->name('home');
-// });
-
-
-
-Route::get('/ct', function () {
-    $products = Http::get(config('app.backend_url').'/api/api-products')->json();
-    return view('products.cart.index', ['products'=>$products['product']]);
-})->name('products.cart.index');
 
 Route::get('/cart', [CartController::class, 'cartIndex'])->name('cart');
 Route::get('add-to-cart/{id}', [CartController::class, 'addToCart'])->name('add.to.cart');
@@ -50,11 +37,11 @@ Route::delete('remove-from-cart', [CartController::class, 'remove'])->name('remo
 
 
 Auth::routes();
-
-Route::get('/login2', [ApiLoginController::class, 'login'])->name('apiLogin');
+Route::get('/login2', [ApiLoginController::class, 'login'])->name('login2');
 Route::post('/api-login', [ApiLoginController::class, 'loginData'])->name('loginData');
 
-Route::group(['middleware' => 'web'], function () {
+Route::group(['middleware' => 'auth'], function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
-});
 
+    Route::get('checkout', [CartController::class, 'checkout'])->name('checkout');
+});

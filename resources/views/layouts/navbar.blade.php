@@ -26,6 +26,10 @@
                     <a class="nav-link py-0 custom-border-right {{ Request::routeIs('login') ? 'active' : '' }}"
                         href="{{ route('login') }}">{{ __('Login') }}</a>
                 </li>
+                <li class="nav-item" id="LoginButton">
+                    <a class="nav-link py-0 custom-border-right {{ Request::routeIs('login2') ? 'active' : '' }}"
+                        href="{{ route('login2') }}">{{ __('Login 2') }}</a>
+                </li>
                 @endif
 
                 @if (Route::has('register'))
@@ -35,13 +39,13 @@
                 </li>
                 @endif
                 @else
-                <li class="nav-item dropdown">
+                <li class="nav-item dropdown p-0">
                     <a id="navbarDropdown" class="nav-link py-0 custom-border-right dropdown-toggle" href="#"
                         role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                         {{ Auth::user()->name }}
                     </a>
 
-                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                    <div class="dropdown-menu p-1" aria-labelledby="navbarDropdown" style="max-width: 300px">
                         <a class="dropdown-item" href="{{ route('logout') }}"
                             onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                             {{ __('Logout') }}
