@@ -118,7 +118,7 @@
                 else{
                     localStorage.setItem("authToken", JSON.stringify(response.data.token));
                     localStorage.setItem("userData", JSON.stringify(response.data.user));
-                    window.location.href="/";
+                    history.back();
                 }
 
             }).catch((error) => {

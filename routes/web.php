@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Auth\ApiLoginController;
 use App\Http\Controllers\Products\CartController;
+use App\Http\Controllers\Products\OrderController;
 
 
 // Route::get('/', function () {
@@ -35,6 +36,8 @@ Route::get('add-to-cart/{id}', [CartController::class, 'addToCart'])->name('add.
 Route::patch('update-cart', [CartController::class, 'update'])->name('update.cart');
 Route::delete('remove-from-cart', [CartController::class, 'remove'])->name('remove.from.cart');
 
+Route::get('checkout', [OrderController::class, 'checkout'])->name('checkout');
+Route::post('confirm-order', [OrderController::class, 'confirmOrder'])->name('confirmOrder');
 
 Auth::routes();
 Route::get('/login2', [ApiLoginController::class, 'login'])->name('login2');
@@ -42,6 +45,4 @@ Route::post('/api-login', [ApiLoginController::class, 'loginData'])->name('login
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
-
-    Route::get('checkout', [CartController::class, 'checkout'])->name('checkout');
 });
