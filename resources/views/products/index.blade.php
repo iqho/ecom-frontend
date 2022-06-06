@@ -134,6 +134,11 @@
     </div>
 </div>
 @endif
+@if ($success = session('orderSuccess'))
+    <div class="alert alert-success">
+        <strong>{{ $success['status'] }}</strong>
+    </div>
+@endif
 
 <div class="card-gallery">
     @foreach ($products as $product)
