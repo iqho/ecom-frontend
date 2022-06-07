@@ -16,7 +16,7 @@ use App\Http\Controllers\Products\OrderController;
 
 Route::get('/', function () {
     $products = Http::get(config('app.backend_url') . '/api/api-products')->json();
-    return view('products.index', ['products' => $products['product']]);
+    return view('products.index', ['products' => $products['product'], 'categories' => $products['categories']]);
 })->name('products.index');
 
 Route::get('details/{id}', function ($id) {
@@ -24,12 +24,16 @@ Route::get('details/{id}', function ($id) {
     return view('products.details', ['product' => $product['product']]);
 })->name('products.details');
 
+Route::get('/category/{id}', function ($id) {
+    $category = Http::get(config('app.backend_url') . '/api/api-categories/' . $id)->json();
+    return view('categories.show', ['category' => $category['category']]);
+})->name('categories.products');
+
 Route::view('/vue', 'products.vue.index')->name('products.vue.index');
 //Route::view('/vue/{id}', 'products.vue.details')->name('products.vue.details');
 Route::get('/vue/{id}', function ($id) {
     return view('products.vue.details', compact('id'));
 })->name('products.vue.details');
-
 
 Route::get('/cart', [CartController::class, 'cartIndex'])->name('cart');
 Route::get('add-to-cart/{id}', [CartController::class, 'addToCart'])->name('add.to.cart');

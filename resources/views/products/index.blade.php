@@ -128,68 +128,80 @@
 @endpush
 @section('content')
 
-@if (session('success'))
-<div class="row g-0 mb-2">
-    <div id="success" class="col-12 text-center text-success" style="font-size: 18px">{{ session('success') }}
+<div class="container">
+    @if (session('success'))
+    <div class="row g-0 mb-2">
+        <div id="success" class="col-12 text-center text-success" style="font-size: 18px">{{ session('success') }}
+        </div>
     </div>
-</div>
-@endif
-@if ($success = session('orderSuccess'))
+    @endif
+    @if ($success = session('orderSuccess'))
     <div class="alert alert-success">
         <strong>{{ $success['status'] }}</strong>
     </div>
-@endif
-
-<div class="card-gallery">
-    @foreach ($products as $product)
-    <div class="card-content position-relative shadow">
-        <div>
-            <a href="{{ route('products.details', $product['id']) }}">
-                @if ($product['image'])
-                <img src="{{ config('app.backend_url') }}/product-images/{{ $product['image'] }}" class="card-img-top"
-                    alt="..." style="width:100%; height:200px">
-                @else
-                <img src="https://www.freeiconspng.com/uploads/no-image-icon-11.PNG" class="card-img-top" alt="..."
-                    style="width:100%; height:200px">
-                @endif
-            </a>
+    @endif
+    <div class="row">
+        <div class="col-md-12 text-center border-bottom border-gray fs-4">
+            Categories : 
+            @foreach ($categories as $category)
+            <a href="{{ route('categories.products', $category['id']) }}"> {{ $category['name'] }}</a> | 
+            @endforeach
         </div>
-        <h4 class="mt-1 mb-0"><a href="{{ route('products.details', $product['id']) }}"
-                class="text-primary font-weight-bold">{{ $product['name'] }}</a></h4>
-        <span class="badge bg-danger mt-1" style="font-size: 14px">{{ $product['category']['name'] ?? '' }}</span>
-        <h6 class="mt-2">
-            {{-- @foreach ($product['product_prices'] as $price)
-            {{ $price['price_type']['name'] ?? 'null' }} : <strong class="text-danger">৳{{ $price['amount']
-                }}</strong><br>
-            @endforeach --}}
+    </div>
+    <div class="card-gallery">
+        @foreach ($products as $product)
+        <div class="card-content position-relative shadow">
+            <div>
+                <a href="{{ route('products.details', $product['id']) }}">
+                    @if ($product['image'])
+                    <img src="{{ config('app.backend_url') }}/product-images/{{ $product['image'] }}" class="card-img-top"
+                        alt="..." style="width:100%; height:200px">
+                    @else
+                    <img src="https://www.freeiconspng.com/uploads/no-image-icon-11.PNG" class="card-img-top" alt="..."
+                        style="width:100%; height:200px">
+                    @endif
+                </a>
+            </div>
+            <h4 class="mt-1 mb-0"><a href="{{ route('products.details', $product['id']) }}"
+                    class="text-primary font-weight-bold">{{ $product['name'] }}</a></h4>
+            <span class="badge bg-danger mt-1" style="font-size: 14px">
+                <a href="{{ route('categories.products', $product['category']['id']) }}" class="text-white">{{
+                    $product['category']['name'] ?? '' }}</a>
+            </span>
+            <h6 class="mt-2">
+                {{-- @foreach ($product['product_prices'] as $price)
+                {{ $price['price_type']['name'] ?? 'null' }} : <strong class="text-danger">৳{{ $price['amount']
+                    }}</strong><br>
+                @endforeach --}}
 
-            @foreach ($product['product_prices'] as $price)
-                @if ($price['start_date'] <= \Carbon\Carbon::now() && $price['end_date']>= \Carbon\Carbon::now())
+                @foreach ($product['product_prices'] as $price)
+                    @if ($price['start_date'] <= \Carbon\Carbon::now() && $price['end_date']>= \Carbon\Carbon::now())
                     <div class="mr-1">{{ $price['price_types']['name'] ?? '' }} : ৳ {{ $price['amount'] }}</div>
                     @break
-                @elseif ($price['price_type_id'] == 1)
+                    @elseif ($price['price_type_id'] == 1)
                     <div class="mr-1">{{ $price['price_type']['name'] ?? '' }} : ৳{{
                         $price['amount'] }}</div>
                     @break
-                @else
+                    @else
                     <div class="mr-1">No Price</div>
-                @endif
-            @endforeach
+                    @endif
+                @endforeach
 
-        </h6>
-        <p class="text-center">{!! Str::limit($product['description'], 60) !!}</p>
-        <ul>
-            <li><i class="fa fa-star" aria-hidden="true"></i></li>
-            <li><i class="fa fa-star" aria-hidden="true"></i></li>
-            <li><i class="fa fa-star" aria-hidden="true"></i></li>
-            <li><i class="fa fa-star" aria-hidden="true"></i></li>
-            <li><i class="fa fa-star" aria-hidden="true"></i></li>
-        </ul>
-        <div class="row g-0 position-absolute bottom-0 start-0 w-100">
-            <a href="{{ route('add.to.cart', $product['id']) }}" class="col-6 button buy-2">Add to Cart</a><a
-                class="col-6 button buy-1">Add to Wishlist</a>
+            </h6>
+            <p class="text-center">{!! Str::limit($product['description'], 60) !!}</p>
+            <ul>
+                <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                <li><i class="fa fa-star" aria-hidden="true"></i></li>
+            </ul>
+            <div class="row g-0 position-absolute bottom-0 start-0 w-100">
+                <a href="{{ route('add.to.cart', $product['id']) }}" class="col-6 button buy-2">Add to Cart</a><a
+                    class="col-6 button buy-1">Add to Wishlist</a>
+            </div>
         </div>
+        @endforeach
     </div>
-    @endforeach
 </div>
 @endsection

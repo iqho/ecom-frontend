@@ -65,10 +65,10 @@
                 {{ \Carbon\Carbon::now() }}
                 @foreach ($product['product_prices'] as $price)
                 @if (($price['start_date'] <= \Carbon\Carbon::now()) && ($price['end_date']> \Carbon\Carbon::now()))
-                    <div class="mr-1">{{ $price['price_types']['name'] }} : ৳ {{ $price['amount'] }}</div>
+                    <div class="mr-1">{{ $price['price_types']['name'] ?? '' }} : ৳ {{ $price['amount'] }}</div>
                     @break
                     @elseif ($price['price_type_id'] == 1)
-                    <div class="mr-1">{{ $price['price_type']['name'] }} : ৳{{
+                    <div class="mr-1">{{ $price['price_type']['name'] ?? '' }} : ৳{{
                         $price['amount'] }}</div>
                     @break
                     @else

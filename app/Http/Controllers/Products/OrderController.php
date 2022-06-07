@@ -15,13 +15,11 @@ class OrderController extends Controller
 
     public function confirmOrder(Request $request)
     {
-
-       // return $request->all();
         $response = Http::post('http://127.0.0.1:8000/api/api-orders', $request->all());
         $succMsg = json_decode($response, true);
 
-        //$request->session()->flush('cart');
+        $request->session()->flush('cart');
 
-        return redirect()->route('products.index')->with(['orderSuccess'=> $succMsg]);
+        return redirect()->route('products.index')->with(['orderSuccess' => $succMsg]);
     }
 }
